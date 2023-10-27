@@ -1,4 +1,4 @@
-# estudo_pratico_em_grafos
+# Practical Study in Graphs
 
 Members:  
 &emsp;Santiago Cardoso  

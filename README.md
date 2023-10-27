@@ -1,5 +1,4 @@
 # estudo_pratico_em_grafos
-implementacao de um grafo
 
 Members:  
 &emsp;Santiago Cardoso  

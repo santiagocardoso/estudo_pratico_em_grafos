@@ -4,10 +4,10 @@
 #include <string.h>
 
 // 1� passo -> Importar todos os dados
-// 2� passo -> montar a tabela euclidiana
-// 3� passo -> construção da tabela euclidiana normalizada
-// 4� passo -> aplicar o limiar de 0.3
-// 5� passo -> salvar o grafo no arquivo Grafo.csv
+// 2� passo -> Montar a tabela euclidiana
+// 3� passo -> Construção da tabela euclidiana normalizada
+// 4� passo -> Aplicar o limiar de 0.3
+// 5� passo -> Salvar o grafo no arquivo Grafo.csv
 
 typedef struct Iris {
     float sep_len;
@@ -168,7 +168,7 @@ void imprime_lista_de_adjacencias() {
     int counter = 0;
     for (int i = 0; i < 150; i++) {
         for (int z = 0; z < 150; z++) {
-            if (i != z && tabela_euclidiana_Norm[i][z] <= 0.3) { // ignora os elementos vazios "0" da lista
+            if (i != z && tabela_euclidiana_Norm[i][z] <= 0.3) { // Ignora os elementos vazios "0" da lista
                 printf("%d %d\n",i , z);
                 counter++;
             }

@@ -68,6 +68,8 @@ void ler_arquivo_CSV() {
         conta_iris++;
     }
 
+    fclose(file);
+
     // printf("A quantidade de linhas lidas é: %d\n\n", conta_iris);
 }
 

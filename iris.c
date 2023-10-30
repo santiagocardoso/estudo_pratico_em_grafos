@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stddef.h>
 #include <unistd.h>
-// #include <windows.h>
+#include <windows.h>
 #include "funcoes.h"
 
 void estudo_componentes_conexos() { /* Limiares a se estudar: limiar | componentes

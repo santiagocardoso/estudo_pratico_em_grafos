@@ -254,7 +254,6 @@ int visitados[2][150]; //linha 0 -> visitado : T/F         linha 1 -> vertice pr
 int** tabela_de_conexoes;
 
 int DFS(int vertice) {
-    /*int** */ tabela_de_conexoes = criar_matriz_adjacencias();
 
     visitados[0][vertice] = 1; // Define o vertice como "true" para visitado
     int comp_conexos = 1;
@@ -307,14 +306,16 @@ int contarComponentesConexos(int v) {
 }
 
 int verticeMaisProximo(int v, int lista_de_verticesRaiz[], int tam){
-    int distancias_euclidianas[tam];
+    float distancias_euclidianas[tam];
     for(int i = 0; i<tam;i++){
         distancias_euclidianas[i] = tabela_euclidiana_Norm[v][lista_de_verticesRaiz[i]]; // retorna a distancia euclidiana entre v e o vertice na posicao lista_de_vertices[i]
+
     }
 
-    int menor = distancias_euclidianas[0];
-    int pos;
-    for(int i = 0;i<tam;i++){
+    float menor = distancias_euclidianas[0];
+    int pos = 0;
+
+    for(int i = 0; i<tam; i++){
         if(distancias_euclidianas[i] < menor){
             menor = distancias_euclidianas[i];
             pos = i; // posicao do vertice mais proximo
@@ -323,6 +324,15 @@ int verticeMaisProximo(int v, int lista_de_verticesRaiz[], int tam){
 
     return lista_de_verticesRaiz[pos];
 
+}
+
+void organizarVerticesRaiz(int verticesRaiz[], int tam){
+    for(int i = 1; i<tam;i++){
+        if(verticesRaiz[i]==0){
+            verticesRaiz[i] = verticesRaiz[tam-1];
+            verticesRaiz[tam-1] = 0;
+        }
+    }
 }
 
 void histograma(){
@@ -343,17 +353,64 @@ void histograma(){
     }
     printf("--------------------------------------\n");
     printf("quantidade de clusters = %d\n\n",Qtd_clusters);
+     //-------------------------------------------------------------------------------------------------------------
 
-    int lista_de_verticesRaiz[Qtd_clusters];
-    for(int j= 0; j<Qtd_clusters;j++){
-        lista_de_verticesRaiz[j] = clusters[j][0];
-    }
+    int menu = -1;
 
-    for (int i = 0; i<Qtd_clusters;i++){
-        if(clusters[i][1]<40){
-            int vertice_mais_proximo = verticeMaisProximo(clusters[i][0],lista_de_verticesRaiz,Qtd_clusters);
-            tabela_de_conexoes[clusters[i][0]][vertice_mais_proximo] = 1;
+    while(menu!=0){
+        printf("[0] Sair do histograma\n[1] Otimizar histograma\n");
+        scanf("%d",&menu);
+
+        if(menu==1){
+
+
+            zerarVisitados();
+
+            //criar lista de raizes dos clusters
+            int lista_de_verticesRaiz[Qtd_clusters];
+            for(int j= 0; j<Qtd_clusters;j++){
+                lista_de_verticesRaiz[j] = clusters[j][0];
+            }
+
+            //juntar elementos dispersos
+            for (int i = 0; i<Qtd_clusters;i++){
+                if(clusters[i][1]<48){ // caso o elemento se conecte com menos de 48 vertices, esse elemento ira entrar no cluster do vertice mais semelhante
+                    int vertice_mais_proximo = verticeMaisProximo(clusters[i][0],lista_de_verticesRaiz,Qtd_clusters); // encontra o vertice mais proximo dentre as raizes de cluster
+                    tabela_de_conexoes[clusters[i][0]][vertice_mais_proximo] = 1; // entra no cluster do vertice mais proximo
+                    tabela_de_conexoes[vertice_mais_proximo][clusters[i][0]] = 1;
+
+
+                    //por ter entrado em outro cluster, o elemento deve deixar de ser uma raiz, a funcao encontra o elemento na lista de vertices raiz, e troca seu valor por 0
+                    for(int k = 0; k<Qtd_clusters;k++){
+                        if(lista_de_verticesRaiz[k]==clusters[i][0]){
+                            lista_de_verticesRaiz[k] = 0;
+                        }
+                    }
+
+                    //atualizar lista de verticesRaiz, removendo segundo elemento 0 que eh o vertice que deixou de ser raiz
+                    organizarVerticesRaiz(lista_de_verticesRaiz,Qtd_clusters);
+                    Qtd_clusters--;
+                }
+            }
+
+             printf("------------HISTOGRAMA----------------\n");
+            Qtd_clusters = 0;
+            for(int i = 0; i<150;i++){
+                if(visitados[0][i] == 0){
+                    int qtd_componentes_conexos = DFS(i);
+                    printf("raiz = Vertice %d, componentes conexos = %d\n",i,qtd_componentes_conexos);
+                    clusters[Qtd_clusters][0] = i;
+                    clusters[Qtd_clusters][1] = qtd_componentes_conexos;
+
+                    Qtd_clusters++;
+                }
+            }
+            printf("--------------------------------------\n");
+            printf("quantidade de clusters = %d\n\n",Qtd_clusters);
+        }
+
+        else if(menu !=0){
+            printf("Opcao invalida!\n");
         }
     }
-
 }

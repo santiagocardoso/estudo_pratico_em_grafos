@@ -8,7 +8,7 @@
 #include "funcoes.h"
 
 void estudo_componentes_conexos() { /* Limiares a se estudar: limiar | componentes
-                                     *                        0.086  | 49 
+                                     *                        0.086  | 49
                                      *                        0.196  | 50
                                      *                        0.312  | 50
                                      *                        0.313  | 150
@@ -17,13 +17,13 @@ void estudo_componentes_conexos() { /* Limiares a se estudar: limiar | component
 
     for (float i = 0; i < 0.4; i += 0.001) {
         limiar = i;
-        
+
         printf("Limiar: %.3f\n", limiar);
         imprime_lista_de_adjacencias();
         int numComponentes = contarComponentesConexos(0);
         printf("Número de Componentes Conexos: %d\n\n", numComponentes);
 
-        /* 
+        /*
          * Visualizar grafos gerados com cada novo limiar computado
         int status = system("python displayGrafo.py");
         sleep(5);
@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
     int vertice;
     float novo_limiar;
     while (opcao != 0) {
-        printf("[0] Sair\n[1] Ler IrisDataset.csv\n[2] Carregar Grafo.csv\n[3] Contar componentes conexos (vértice)\n[4] Estudo de componentes conexos\n[5] Alterar o limiar\n");
+        printf("[0] Sair\n[1] Ler IrisDataset.csv\n[2] Carregar Grafo.csv\n[3] Contar componentes conexos (vértice)\n[4] Estudo de componentes conexos\n[5] Alterar o limiar\n[6] Histograma\n");
         printf("\nOpção: ");
         scanf("%d", &opcao);
         printf("\n");
@@ -70,6 +70,7 @@ int main(int argc, char *argv[]) {
             case 3:
                 printf("Vértice: ");
                 scanf("%d", &vertice);
+                zerarVisitados();
                 printf("Componentes: %d\n", contarComponentesConexos(vertice));
 
                 break;
@@ -84,6 +85,12 @@ int main(int argc, char *argv[]) {
                 imprime_lista_de_adjacencias();
 
                 break;
+
+            case 6:
+                histograma();
+
+                break;
+
             default:
                 printf("Op��o inv�lida!\n");
 

@@ -252,10 +252,11 @@ void pop(int *pilha){
 
 int visitados[2][150]; //linha 0 -> visitado : T/F         linha 1 -> vertice predecessor ao visitado : int v
 
-void DFS(int vertice) {
+int DFS(int vertice) {
     int** tabela_de_conexoes = criar_matriz_adjacencias();
 
     visitados[0][vertice] = 1; // Define o vertice como "true" para visitado
+    int comp_conexos = 1;
     int *pilha = criar_pilha();
     push(pilha, vertice);
 
@@ -269,6 +270,7 @@ void DFS(int vertice) {
                 visitados[1][i] = topo;
                 push(pilha,i);
                 ha_mais_vizinhos = 1;
+                comp_conexos++;
             }
         }
 
@@ -276,6 +278,16 @@ void DFS(int vertice) {
             pop(pilha);
         }
 
+    }
+    return comp_conexos;
+}
+
+void zerarVisitados(){
+    //zerar lista de visitados essa funcao eh util para contar componentes conexos de diferentes clusters
+    //pois a variavel global precisa ser zerada
+    for(int i = 0; i<150; i++){
+        visitados[0][i] = 0;
+        visitados[1][i] = 0;
     }
 }
 
@@ -291,4 +303,16 @@ int contarComponentesConexos(int v) {
     }
 
     return num_comps; // Retorna o n�mero de componentes conexos
+}
+
+void histograma(){
+    zerarVisitados();
+
+    printf("------------HISTOGRAMA----------------\n");
+    for(int i = 0; i<150;i++){
+        if(visitados[0][i] == 0){
+            printf("raiz = Vertice %d, componentes conexos = %d\n",i,DFS(i));
+        }
+    }
+    printf("--------------------------------------\n\n");
 }

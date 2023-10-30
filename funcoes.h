@@ -19,6 +19,8 @@ float distancia_euclidiana(Iris *flor1, Iris *flor2){
     return DE;
 }
 
+float limiar = 0.3;
+
 Iris *lista_de_vertices[150];
 char lista_De_variedades[150][100];
 float tabela_euclidiana_Norm[150][150];
@@ -64,7 +66,7 @@ void ler_arquivo_CSV() {
         conta_iris++;
     }
 
-    printf("A quantidade de linhas lida eh %d\n\n", conta_iris);
+    printf("\nA quantidade de linhas lidas é: %d\n", conta_iris);
 }
 
 
@@ -120,26 +122,75 @@ void criar_tabela_euclidianaNorm(){
     }
 }
 
-void imprime_lista_de_adjacencias(float limiar) {
+void salvar_grafo() {
+    FILE *file = fopen("Grafo.csv","w");
+
+    char linha[100];
+    char *token;
+
+    if (file == NULL) {
+        printf("Erro ao abrir o arquivo");
+        return;
+    }
+
+    for (int i = 0; i < 150; i++) {
+        for (int z = 0; z < 150; z++) {
+            if (i != z && tabela_euclidiana_Norm[i][z] <= limiar)
+                fprintf(file, "%d %d\n",i ,z);
+        }
+    }
+
+    fclose(file);
+}
+
+void carregar_grafo() {
+    FILE *file = fopen("Grafo.csv", "r");
+
+    char linha[100];
+
+    if (file == NULL) {
+        printf("Erro ao abrir o arquivo");
+        return;
+    }
+
+    fgets(linha, sizeof(linha), file);
+    while (fgets(linha, sizeof(linha), file) != NULL) {
+        char *token = strtok(linha, " ");
+
+        int valor = atoi(token);
+        printf("%d ",valor);
+
+        token = strtok(NULL, " ");
+        valor = atoi(token);
+
+        printf("%d\n",valor);
+    }
+
+    fclose(file);
+}
+
+
+void imprime_lista_de_adjacencias() {
 
     ler_arquivo_CSV();
     criar_tabela_euclidiana();
     criar_tabela_euclidianaNorm();
+    salvar_grafo();
 
     int counter = 0;
 
     for (int i = 0; i < 150; i++) {
         for (int z = 0; z < 150; z++) {
             if (i!=z && tabela_euclidiana_Norm[i][z]<=limiar ) { // ignora os elementos vazios "0" da lista
-                printf("%d %d\n",i , z);
+                // printf("%d %d\n",i , z);
                 counter++;
             }
         }
     }
-    printf("\n\n arestas = %d",counter);
+    printf("\nArestas = %d\n", counter);
 }
 
-int ** criar_matriz_adjacencias(float limiar){
+int** criar_matriz_adjacencias( ){
     ler_arquivo_CSV();
     criar_tabela_euclidiana();
     criar_tabela_euclidianaNorm();
@@ -159,4 +210,3 @@ int ** criar_matriz_adjacencias(float limiar){
     }
     return matriz;
 }
-

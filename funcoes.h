@@ -136,7 +136,7 @@ void salvar_grafo() {
     }
 
     for (int i = 0; i < 150; i++) {
-        for (int z = 0; z < 150; z++) {
+        for (int z = i; z < 150; z++) {
             if (i != z && tabela_euclidiana_Norm[i][z] <= limiar)
                 fprintf(file, "%d %d\n",i ,z);
         }

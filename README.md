@@ -1,14 +1,15 @@
-# Practical Study in Graphs
+# Estudo Prático em Grafos
 
-Members:  
+Membros:  
+&emsp;Lucas Gabriel  
 &emsp;Santiago Cardoso  
-&emsp;Lucas Gabriel
 
-Final work of the Teoria dos Grafos (TEG) discipline, done in the C programming language.
+Trabalho final da disciplina de Teoria dos Grafos (TEG), feito na linguagem de programação C.
 
 ```
 $ git clone https://github.com/santiagocardoso/estudo_pratico_em_grafos.git
 ```
 
-Execution:  
-&emsp;gcc iris.c && ./a.out
+Execução:  
+&emsp;gcc iris.c -o iris -lm
+&emsp;./iris (valor do limiar)

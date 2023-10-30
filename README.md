@@ -11,5 +11,5 @@ $ git clone https://github.com/santiagocardoso/estudo_pratico_em_grafos.git
 ```
 
 Execução:  
-&emsp;gcc iris.c -o iris -lm
+&emsp;gcc iris.c -o iris -lm  
 &emsp;./iris (valor do limiar)

@@ -9,6 +9,8 @@
 // 4� passo -> Aplicar o limiar de 0.3
 // 5� passo -> Salvar o grafo no arquivo Grafo.csv
 
+#define limiar 0.3
+
 typedef struct Iris {
     float sep_len;
     float sep_width;
@@ -87,7 +89,7 @@ void salvar_grafo() {
 
     for (int i = 0; i < 150; i++) {
         for (int z = 0; z < 150; z++) {
-            if (i != z && tabela_euclidiana_Norm[i][z] <= 0.3)
+            if (i != z && tabela_euclidiana_Norm[i][z] <= limiar)
                 fprintf(file, "%d %d\n",i ,z);
         }
     }
@@ -168,7 +170,7 @@ void imprime_lista_de_adjacencias() {
     int counter = 0;
     for (int i = 0; i < 150; i++) {
         for (int z = 0; z < 150; z++) {
-            if (i != z && tabela_euclidiana_Norm[i][z] <= 0.3) { // Ignora os elementos vazios "0" da lista
+            if (i != z && tabela_euclidiana_Norm[i][z] <= limiar) { // Ignora os elementos vazios "0" da lista
                 printf("%d %d\n",i , z);
                 counter++;
             }
@@ -180,8 +182,8 @@ void DFS(int v, int comp_atual) {
     visitados[v] = comp_atual; // Define um rótulo "cor" para o vértice
 
     for (int i = 0; i < 150; i++) {
-        if (tabela_euclidiana_Norm[v][i] && !visitados[i]) // Para cada vizinho de V que ainda não foi visitado ele define o rótulo também
-            DFS(v, comp_atual);
+        if (tabela_euclidiana_Norm[v][i] && visitados[i] == -1) // Para cada vizinho de V que ainda não foi visitado ele define o rótulo também
+            DFS(i, comp_atual);
     }
 }
 

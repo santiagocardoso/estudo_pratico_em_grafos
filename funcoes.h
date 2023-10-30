@@ -2,6 +2,8 @@
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+// #include <windows.h>
 
 typedef struct Iris {
     float sep_len;
@@ -66,7 +68,7 @@ void ler_arquivo_CSV() {
         conta_iris++;
     }
 
-    printf("A quantidade de linhas lidas é: %d\n\n", conta_iris);
+    // printf("A quantidade de linhas lidas é: %d\n\n", conta_iris);
 }
 
 

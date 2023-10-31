@@ -45,6 +45,7 @@ int main(int argc, char *argv[]) {
     }
 
     limiar = atof(argv[1]);
+    tabela_de_conexoes = criar_matriz_adjacencias();
 
     int opcao = -1;
     int vertice;
@@ -82,6 +83,7 @@ int main(int argc, char *argv[]) {
                 printf("Novo limiar: ");
                 scanf("%f", &limiar);
                 printf("\n");
+                tabela_de_conexoes = criar_matriz_adjacencias();
                 imprime_lista_de_adjacencias();
 
                 break;
@@ -92,7 +94,7 @@ int main(int argc, char *argv[]) {
                 break;
 
             default:
-                printf("Op��o inv�lida!\n");
+                printf("Opcao invalida!\n");
 
                 break;
         }

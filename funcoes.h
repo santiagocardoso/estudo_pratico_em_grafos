@@ -3,7 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <windows.h>
+
+#include <windows.h> // Se estiver no linux comente esse include
 
 typedef struct Iris {
     float sep_len;
@@ -147,6 +148,29 @@ void salvar_grafo() {
     fclose(file);
 }
 
+int** tabela_de_conexoes;
+
+void salvar_grafo_otimizado() {
+    FILE *file = fopen("Grafo.csv","w");
+
+    char linha[100];
+    char *token;
+
+    if (file == NULL) {
+        printf("Erro ao abrir o arquivo");
+        return;
+    }
+
+    for (int i = 0; i < 150; i++) {
+        for (int z = i; z < 150; z++) {
+            if (i != z && tabela_de_conexoes[i][z] == 1)
+                fprintf(file, "%d %d\n",i ,z);
+        }
+    }
+
+    fclose(file);
+}
+
 void carregar_grafo() {
     FILE *file = fopen("Grafo.csv", "r");
 
@@ -251,7 +275,6 @@ void pop(int *pilha){
 }
 
 int visitados[2][150]; //linha 0 -> visitado : T/F         linha 1 -> vertice predecessor ao visitado : int v
-int** tabela_de_conexoes;
 
 int DFS(int vertice) {
 
@@ -371,6 +394,7 @@ void histograma(){
         fprintf(file, "%d,%d\n",clusters[i][0] ,clusters[i][1]);
 
     }
+    salvar_grafo_otimizado();
 
     fclose(file);
 
@@ -384,7 +408,6 @@ void histograma(){
         scanf("%d",&menu);
 
         if(menu==1){
-
 
             zerarVisitados();
 
@@ -442,12 +465,13 @@ void histograma(){
 
             fprintf(file,"Cluster,Componentes\n");
             for (int i = 0; i < Qtd_clusters; i++) {
-                fprintf(file, "%d %d\n",clusters[i][0] ,clusters[i][1]);
+                fprintf(file, "%d,%d\n",clusters[i][0] ,clusters[i][1]);
 
             }
 
             fclose(file);
 
+            salvar_grafo_otimizado();
         }
 
         else if(menu !=0){

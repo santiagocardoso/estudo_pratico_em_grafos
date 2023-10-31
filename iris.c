@@ -4,15 +4,10 @@
 #include <string.h>
 #include <stddef.h>
 #include <unistd.h>
-#include <windows.h>
+#include <windows.h> // Se estiver no linux comente esse include
 #include "funcoes.h"
 
-void estudo_componentes_conexos() { /* Limiares a se estudar: limiar | componentes
-                                     *                        0.086  | 49
-                                     *                        0.196  | 50
-                                     *                        0.312  | 50
-                                     *                        0.313  | 150
-                                    */
+void estudo_componentes_conexos() {
     float limiar_original = limiar;
 
     for (float i = 0; i < 0.4; i += 0.001) {

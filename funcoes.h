@@ -356,7 +356,7 @@ void histograma(){
     printf("quantidade de clusters = %d\n\n",Qtd_clusters);
      //-------------------------------------------------------------------------------------------------------------
 
-    FILE *file = fopen("Histograma.csv","w");
+    FILE *file = fopen("histograma.csv","w");
 
     char linha[100];
     char *token;
@@ -366,8 +366,9 @@ void histograma(){
         return;
     }
 
+    fprintf(file,"Cluster,Componentes\n");
     for (int i = 0; i < Qtd_clusters; i++) {
-        fprintf(file, "%d %d\n",clusters[i][0] ,clusters[i][1]);
+        fprintf(file, "%d,%d\n",clusters[i][0] ,clusters[i][1]);
 
     }
 
@@ -429,7 +430,7 @@ void histograma(){
             printf("--------------------------------------\n");
             printf("quantidade de clusters = %d\n\n",Qtd_clusters);
 
-            FILE *file = fopen("Histograma.csv","w");
+            FILE *file = fopen("histograma.csv","w");
 
             char linha[100];
             char *token;
@@ -439,6 +440,7 @@ void histograma(){
                 return;
             }
 
+            fprintf(file,"Cluster,Componentes\n");
             for (int i = 0; i < Qtd_clusters; i++) {
                 fprintf(file, "%d %d\n",clusters[i][0] ,clusters[i][1]);
 
